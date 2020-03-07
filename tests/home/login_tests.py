@@ -16,11 +16,9 @@ class LoginTests(unittest.TestCase):
         self.lp.login("test@email.com", "abcabc")
         result = self.lp.verifyLoginSuccessful()
         assert result == False
-        self.driver.quit()
 
     @pytest.mark.run(order=1)
     def test_invalidLogin(self):
-        self.driver.get(self.baseURL)
         self.lp.login("test@email.com", "abcabcabc")
         result = self.lp.verifyLoginFailed()
-        assert result == False
+        assert result == True
