@@ -4,18 +4,23 @@ import unittest
 import pytest
 
 
+@pytest.mark.usefixtures("oneTimeSetUp", "setUp")
 class LoginTests(unittest.TestCase):
 
-    def test_validLogin(self):
-        baseURL = "https://letskodeit.teachable.com/"
-        driver = webdriver.Firefox(executable_path="C:\\Users\\Demoriel Purnell\\"
-                                                   "workspace_python\\drivers\\geckodriver.exe")
-        driver.maximize_window()
-        driver.implicitly_wait(7)
-        driver.get(baseURL)
+    @pytest.fixture(autouse=True)
+    def classSetup(self, oneTimeSetUp):
+        self.lp = LoginPage(self.driver)
 
-        lp = LoginPage(driver)
-        lp.login("test@email.com", "abcabc")
-        result = lp.verifyLoginSuccessful()
+    @pytest.mark.run(order=2)
+    def test_validLogin(self):
+        self.lp.login("test@email.com", "abcabc")
+        result = self.lp.verifyLoginSuccessful()
         assert result == False
-        driver.quit()
+        self.driver.quit()
+
+    @pytest.mark.run(order=1)
+    def test_invalidLogin(self):
+        self.driver.get(self.baseURL)
+        self.lp.login("test@email.com", "abcabcabc")
+        result = self.lp.verifyLoginFailed()
+        assert result == False

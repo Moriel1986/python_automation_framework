@@ -37,7 +37,7 @@ class LoginPage(SeleniumDriver):
         self.clickLoginButton()
 
     def verifyLoginSuccessful(self):
-        result = self.isElementPresent("///img[@class='gravatar']",
+        result = self.isElementPresent("//*[@id='navbar']//span[text()='User Settings']",
                                        locatorType="xpath")
         return result
 
