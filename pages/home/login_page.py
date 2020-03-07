@@ -31,7 +31,6 @@ class LoginPage(SeleniumDriver):
 
     def login(self, email="", password=""):
         self.clickLoginLink()
-        self.clearFields()
         self.enterEmail(email)
         self.enterPassword(password)
         self.clickLoginButton()
@@ -45,11 +44,5 @@ class LoginPage(SeleniumDriver):
         result = self.isElementPresent("//div[contains(text(),'Invalid email or password')]",
                                        locatorType="xpath")
         return result
-
-    def clearFields(self):
-        emailField = self.getElement(locator=self._email_field)
-        emailField.clear()
-        passwordField = self.getElement(locator=self._password_field)
-        passwordField.clear()
 
 

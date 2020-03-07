@@ -11,6 +11,7 @@ class LoginTests(unittest.TestCase):
     def classSetup(self, oneTimeSetUp):
         self.lp = LoginPage(self.driver)
 
+
     @pytest.mark.run(order=2)
     def test_validLogin(self):
         self.lp.login("test@email.com", "abcabc")
